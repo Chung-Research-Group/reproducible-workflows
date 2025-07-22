@@ -1,1 +1,1 @@
-Optimized sturectures / GCMC example / Curve fitting codes
+Optimized sturectures / GCMC input files/ Curve fitting codes
