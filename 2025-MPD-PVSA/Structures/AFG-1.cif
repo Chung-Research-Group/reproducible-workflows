@@ -1,0 +1,55 @@
+#3 3 2 2
+#Al 177 0.05
+#O 178 0.05
+data_AFG-1
+_audit_creation_date              2014-03-29
+_audit_creation_method            'Materials Studio'
+_symmetry_space_group_name_H-M    'P63MC'
+_symmetry_Int_Tables_number       186
+_symmetry_cell_setting            hexagonal
+loop_
+_symmetry_equiv_pos_as_xyz
+  x,y,z
+  -y,x-y,z
+  -x+y,-x,z
+  -x,-y,z+1/2
+  y,-x+y,z+1/2
+  x-y,x,z+1/2
+  -y,-x,z
+  -x+y,y,z
+  x,x-y,z
+  y,x,z+1/2
+  x-y,-y,z+1/2
+  -x,-x+y,z+1/2
+_cell_length_a                    12.7610
+_cell_length_b                    12.7610
+_cell_length_c                    21.4160
+_cell_angle_alpha                 90.0000
+_cell_angle_beta                  90.0000
+_cell_angle_gamma                 120.0000
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_U_iso_or_equiv
+_atom_site_adp_type
+_atom_site_occupancy
+Al    Al    0.25860    0.00610    0.50200    0.00747    Uiso    1.00
+Al    Al    0.07460    0.41000    0.87580    0.01520    Uiso    1.00
+Al    Al    0.00010    0.25720    0.25170    0.00925    Uiso    1.00
+Al    Al    0.07700    0.40910    0.62810    0.00709    Uiso    1.00
+O    O    0.33320    0.31690    0.68380    0.02457    Uiso    1.00
+O    O    0.34810    0.34340    0.81070    0.00633    Uiso    1.00
+O    O    0.32860    0.33090    0.43260    0.02254    Uiso    1.00
+O    O    0.34530    0.33630    0.05860    0.02267    Uiso    1.00
+O    O    0.11860    -0.11860    0.75330    0.02394    Uiso    1.00
+O    O    0.11840    -0.11840    0.00090    0.00165    Uiso    1.00
+O    O    0.11010    -0.11010    0.49350    0.05129    Uiso    1.00
+O    O    0.11320    -0.11320    0.24450    0.01545    Uiso    1.00
+O    O    0.44900    -0.44900    0.61770    0.01507    Uiso    1.00
+O    O    0.45890    -0.45890    0.87150    0.01912    Uiso    1.00
+O    O    0.21200    -0.21200    0.62470    0.02495    Uiso    1.00
+O    O    0.22220    -0.22220    0.86770    0.01115    Uiso    1.00
+
