@@ -1,0 +1,44 @@
+#3 3 3 3
+#Al 177 0.05
+#O 178 0.05
+#Si 177 0.05
+data_GIS-1
+_audit_creation_date              2014-03-29
+_audit_creation_method            'Materials Studio'
+_symmetry_space_group_name_H-M    'P21/A'
+_symmetry_Int_Tables_number       14
+_symmetry_cell_setting            monoclinic
+loop_
+_symmetry_equiv_pos_as_xyz
+  x,y,z
+  -x+1/2,-y,z+1/2
+  -x,-y,-z
+  x+1/2,y,-z+1/2
+_cell_length_a                    9.8430
+_cell_length_b                    10.0230
+_cell_length_c                    10.6160
+_cell_angle_alpha                 90.0000
+_cell_angle_beta                  90.0000
+_cell_angle_gamma                 92.4170
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_U_iso_or_equiv
+_atom_site_adp_type
+_atom_site_occupancy
+Si    Si    0.18142    0.41470    0.11288    0.00697    Uiso    1.00
+Si    Si    0.16038    0.90820    0.87012    0.00608    Uiso    1.00
+Al    Al    0.16921    0.09656    0.11329    0.00405    Uiso    1.00
+Al    Al    0.14900    0.59053    0.86690    0.00659    Uiso    1.00
+O    O    0.99960    0.07870    0.15620    0.02204    Uiso    1.00
+O    O    0.21250    0.26240    0.07630    0.02343    Uiso    1.00
+O    O    0.02540    0.43610    0.14850    0.01254    Uiso    1.00
+O    O    0.30370    0.24500    0.40270    0.01874    Uiso    1.00
+O    O    0.21360    0.99940    0.98610    0.01077    Uiso    1.00
+O    O    0.25950    0.04490    0.24370    0.01039    Uiso    1.00
+O    O    0.27770    0.46450    0.22880    0.01153    Uiso    1.00
+O    O    0.22530    0.51070    0.99440    0.01532    Uiso    1.00
+
