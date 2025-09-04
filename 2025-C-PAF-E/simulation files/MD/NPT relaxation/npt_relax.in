@@ -9,7 +9,7 @@ variable T equal 77
 # variable struc string acs_0_700
 
 # Force Field Settings
-pair_style      lj/cut/coul/long 12.0 12.0  # Lennard-Jones and long-range Coulomb interactions; cutoff distances can be adjusted as needed
+pair_style      lj/cut/coul/long 14.0 12.0  # Lennard-Jones and long-range Coulomb interactions; cutoff distances can be adjusted as needed
 bond_style      harmonic                   # Harmonic potential for bond interactions in CVFF
 angle_style     harmonic                   # Harmonic potential for angle interactions in CVFF
 dihedral_style  harmonic                   # Harmonic potential for dihedral interactions in CVFF

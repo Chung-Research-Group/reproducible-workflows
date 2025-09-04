@@ -14,7 +14,7 @@ boundary        p p p                   # Periodic boundary conditions in all di
 # variable        nvt_steps equal 10000   # NVT steps for averaging (adjust as needed)
 
 # Force Field Settings
-pair_style      lj/cut/coul/long 12.0 12.0  # Lennard-Jones and long-range Coulomb interactions
+pair_style      lj/cut/coul/long 14.0 12.0  # Lennard-Jones and long-range Coulomb interactions
 bond_style      harmonic                   # Harmonic potential for bond interactions
 angle_style     harmonic                   # Harmonic potential for angle interactions
 dihedral_style  harmonic                   # Harmonic potential for dihedral interactions
