@@ -1,0 +1,82 @@
+# LAMMPS Input Script: Deformation with NVT Simulation
+# lmp -in lammps.in -var struc ${s} -var T ${t} -var P ${P} -var n_mol ${n}
+
+shell mkdir minimized
+shell mkdir traj
+shell mkdir npt_output
+
+# Initialization
+units           real                    # Units in real (angstroms, femtoseconds, kcal/mol)
+atom_style      full                    # Atom style for full molecular systems
+boundary        p p p                   # Periodic boundary conditions in all directions
+
+# Define force field parameters
+pair_style      lj/cut/coul/long 14.0 12.0  # Lennard-Jones and long-range Coulomb interactions
+bond_style      harmonic                   # Harmonic potential for bond interactions
+angle_style     harmonic                   # Harmonic potential for angle interactions
+dihedral_style  harmonic                   # Harmonic potential for dihedral interactions
+improper_style  cvff                       # CVFF-specific improper interactions
+
+# Step 1: Load Empty Framework and Insert N2 Molecules
+read_data       ori/${struc}.data extra/atom/types 3 extra/bond/types 2 extra/angle/types 1  # Load empty framework data
+
+# Define  molecule
+molecule        c7h8 Toluene.data
+mass 13 15.9994   # C
+mass 14 12.0110	 # CH
+mass 15 12.0110	 # CH3
+
+# Insert molecules
+create_atoms    0 random ${n_mol} 12345 NULL mol c7h8 12345
+
+# Define only framework-molecules interactions
+pair_coeff      13 13  0.041731  3.880     # C
+pair_coeff      14 14  0.100354  3.695     # CH
+pair_coeff      15 15  0.194746  3.750     # CH3
+pair_modify tail yes mix arithmetic   # Ensure proper mixing rule
+bond_coeff	19 10000 1.40
+bond_coeff	20 10000 1.54
+angle_coeff	35 5000 120
+
+# KSpace and Neighbor Settings
+kspace_style    ewald 1.0e-4                # Ewald method for long-range Coulomb interactions
+special_bonds   lj/coul 0.0 0.0 0.5
+neighbor        2.0 bin
+neigh_modify    delay 5 every 1 check yes
+
+# Step 2: Minimize and Relax New Structure
+minimize        1.0e-4 1.0e-6 1000 1000
+# run             10000
+write_data 	minimized/${struc}_Emin.data
+
+velocity        all create ${T} 12345 mom yes rot yes dist gaussian
+fix             1 all npt temp ${T} ${T} 100.0 iso 1.0 1.0 1000.0  # Replace [Temperature] with desired value
+timestep        1.0  # 1 fs
+run             300000
+
+# Define Variables for Output
+variable step equal step
+variable temp equal temp
+variable press equal press
+variable pe equal pe
+variable ke equal ke
+variable etotal equal etotal 
+variable vol equal vol
+variable a equal lx
+variable b equal ly
+variable c equal lz
+
+# Output Settings
+thermo          1000
+thermo_style    custom step temp press pe ke etotal vol lx ly lz # Output step, temperature, pressure, potential energy, kinetic energy, total energy, and volume
+# Print Thermo Data to File
+fix thermo_output all print 100 "${step} ${temp} ${press} ${pe} ${ke} ${etotal} ${vol} ${a} ${b} ${c}" file npt_output/${struc}_${n_mol}_${T}_output.txt screen no
+
+# Dump Trajectory
+dump            traj_output all custom 100 traj/${struc}_${n_mol}_${T}.lammpstrj id type x y z ix iy iz
+dump_modify     traj_output sort id  # Ensure sorting by atom ID for consistent output
+
+# Run Simulation
+run             200000  # 200 ps
+
+unfix thermo_output
