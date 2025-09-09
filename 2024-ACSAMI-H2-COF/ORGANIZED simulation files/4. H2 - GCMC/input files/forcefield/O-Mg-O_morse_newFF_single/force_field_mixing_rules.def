@@ -5,25 +5,25 @@ yes
 # number of defined interactions
 20
 # N/O/C/H/S/F/B/Al/Si/P/Cl/Ca/Zn/Fe from DREIDING; other metals from UFF; alkanes from modified TraPPE
-B_              lennard-jones          47.81    3.58
-Br_              lennard-jones         126.29   3.73
-C_              lennard-jones          47.86    3.47
-Cl_              lennard-jones         142.56   3.52
-Co_              lennard-jones         7.04     2.56
-Cu_              lennard-jones         2.52     3.11
-F_              lennard-jones          36.48    3.09
-H_              lennard-jones          7.65     2.85
-N_              lennard-jones          38.95    3.26
-Ni_              lennard-jones         7.55     2.52
-O_              lennard-jones          48.16    3.03
-S_              lennard-jones          173.11   3.59
-Si_              lennard-jones         156.00   3.80
-V_               lennard-jones         8.05     2.80
-Zn_              lennard-jones         27.68    4.04
+B              lennard-jones          47.81    3.58
+Br              lennard-jones         126.29   3.73
+C              lennard-jones          47.86    3.47
+Cl              lennard-jones         142.56   3.52
+Co              lennard-jones         7.04     2.56
+Cu              lennard-jones         2.52     3.11
+F              lennard-jones          36.48    3.09
+H              lennard-jones          7.65     2.85
+N              lennard-jones          38.95    3.26
+Ni              lennard-jones         7.55     2.52
+O              lennard-jones          48.16    3.03
+S              lennard-jones          173.11   3.59
+Si              lennard-jones         156.00   3.80
+V               lennard-jones         8.05     2.80
+Zn              lennard-jones         27.68    4.04
 H_h2                 lennard-jones                  0.0     0.0
 H_com                lennard-jones                  36.7   2.958
-Mg_            lennard-jones    55.8574   2.69141
-Sn_            lennard-jones    47.8562   3.47299
-Te_            lennard-jones    48.1581   3.03315
+Mg            lennard-jones    0.0   2.69141
+Sn            lennard-jones    0.0   3.47299
+Te            lennard-jones    0.0   3.03315
 # general mixing rule for Lennard-Jones
 Lorentz-Berthelot
