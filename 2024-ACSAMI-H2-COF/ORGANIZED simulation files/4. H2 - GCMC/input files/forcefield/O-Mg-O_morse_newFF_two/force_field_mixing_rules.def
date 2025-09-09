@@ -22,8 +22,8 @@ V               lennard-jones         8.05     2.80
 Zn              lennard-jones         27.68    4.04
 H_h2                 lennard-jones                  0.0     0.0
 H_com                lennard-jones                  36.7   2.958
-Mg            lennard-jones    55.8574   2.69141
-Sn            lennard-jones    47.8562   3.47299
-Te            lennard-jones    48.1581   3.03315
+Mg            lennard-jones    0.0   2.69141
+Sn            lennard-jones    0.0   3.47299
+Te            lennard-jones    0.0   3.03315
 # general mixing rule for Lennard-Jones
 Lorentz-Berthelot

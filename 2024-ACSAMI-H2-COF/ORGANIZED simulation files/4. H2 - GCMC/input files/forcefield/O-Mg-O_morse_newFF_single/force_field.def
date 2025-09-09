@@ -20,9 +20,9 @@ S       H_com   FEYNMAN_HIBBS_LENNARD_JONES     79.71   3.274   0.97
 Si      H_com   FEYNMAN_HIBBS_LENNARD_JONES     75.67   3.379   0.97
 V       H_com   FEYNMAN_HIBBS_LENNARD_JONES     17.19   2.879   0.98
 Zn      H_com   FEYNMAN_HIBBS_LENNARD_JONES     31.87   3.499   0.98
-H_h2	Mg_	morse	835.09000 	2.01400 	2.21400 
-H_h2	Sn_	morse	10.00000 	3.86200 	2.00000 
-H_h2	Te_	morse	10.02100 	1.01500 	4.98600 
+H_h2	Mg	morse	835.09000 	2.01400 	2.21400 
+H_h2	Sn	morse	10.00000 	3.86200 	2.00000 
+H_h2	Te	morse	10.02100 	1.01500 	4.98600 
 # mixing rules to overwrite
 0
 
