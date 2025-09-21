@@ -2,13 +2,9 @@
 """
 Convert a LAMMPS data file (write_data output) to a CIF using pymatgen.
 
-Supported:
-- Orthogonal or triclinic boxes (xy/xz/yz tilt factors)
-- "Atom Type Labels" section for type->element mapping
-- "Atoms # atomic" section with lines: id type x y z [*ignored*]
-
 Usage:
-    python lammps_data_to_cif.py input.data [-o output.cif]
+    python data2cif.py input.data
+    python data2cif.py input.data --out-dir /path/to/after
 """
 
 from __future__ import annotations
@@ -34,18 +30,24 @@ def _find_bounds(lines: List[str]) -> Tuple[float,float,float,float,float,float,
 
     for ln in lines:
         if xlo is None:
-            m = rx.match(ln); 
-            if m: xlo, xhi = float(m.group(1)), float(m.group(2)); continue
+            m = rx.match(ln)
+            if m:
+                xlo, xhi = float(m.group(1)), float(m.group(2))
+                continue
         if ylo is None:
-            m = ry.match(ln); 
-            if m: ylo, yhi = float(m.group(1)), float(m.group(2)); continue
+            m = ry.match(ln)
+            if m:
+                ylo, yhi = float(m.group(1)), float(m.group(2))
+                continue
         if zlo is None:
-            m = rz.match(ln); 
-            if m: zlo, zhi = float(m.group(1)), float(m.group(2)); continue
+            m = rz.match(ln)
+            if m:
+                zlo, zhi = float(m.group(1)), float(m.group(2))
+                continue
         if not triclinic:
             m = rtilt.match(ln)
             if m:
-                xy, xz, yz = (float(m.group(i)) for i in (1,2,3))
+                xy, xz, yz = (float(m.group(i)) for i in (1, 2, 3))
                 triclinic = True
 
     if None in (xlo, xhi, ylo, yhi, zlo, zhi):
@@ -53,16 +55,7 @@ def _find_bounds(lines: List[str]) -> Tuple[float,float,float,float,float,float,
 
     return xlo, xhi, ylo, yhi, zlo, zhi, xy, xz, yz, triclinic
 
-def _parse_atom_type_labels(lines: List[str]) -> Dict[int,str]:
-    """
-    Parse block:
-        Atom Type Labels
-
-        1 Li
-        2 P
-        3 S
-        4 Sb
-    """
+def _parse_atom_type_labels(lines: List[str]) -> Dict[int, str]:
     mapping: Dict[int, str] = {}
     try:
         i = next(idx for idx, ln in enumerate(lines) if ln.strip().lower() == "atom type labels")
@@ -89,11 +82,9 @@ def _parse_atoms_atomic(lines: List[str]) -> Tuple[List[int], List[int], List[Li
     start = None
     for idx, ln in enumerate(lines):
         if ln.strip().lower().startswith("atoms # atomic"):
-            start = idx
-            break
+            start = idx; break
         if ln.strip() == "Atoms":
-            start = idx
-            break
+            start = idx; break
     if start is None:
         raise ValueError("Could not find 'Atoms # atomic' (or 'Atoms') section.")
 
@@ -133,7 +124,7 @@ def _parse_atoms_atomic(lines: List[str]) -> Tuple[List[int], List[int], List[Li
 
     return ids, types, coords
 
-def _build_lattice(xlo,xhi,ylo,yhi,zlo,zhi,xy,xz,yz) -> Lattice:
+def _build_lattice(xlo, xhi, ylo, yhi, zlo, zhi, xy, xz, yz) -> Lattice:
     lx = xhi - xlo
     ly = yhi - ylo
     lz = zhi - zlo
@@ -142,10 +133,10 @@ def _build_lattice(xlo,xhi,ylo,yhi,zlo,zhi,xy,xz,yz) -> Lattice:
     c = [xz, yz, lz]
     return Lattice([a, b, c])
 
-def data_to_cif(in_path: Path, out_path: Path|None=None) -> Path:
+def data_to_cif(in_path: Path, out_path: Path | None = None, out_dir: Path | None = None) -> Path:
     lines = in_path.read_text().splitlines()
 
-    xlo, xhi, ylo, yhi, zlo, zhi, xy, xz, yz, triclinic = _find_bounds(lines)
+    xlo, xhi, ylo, yhi, zlo, zhi, xy, xz, yz, _ = _find_bounds(lines)
     lattice = _build_lattice(xlo, xhi, ylo, yhi, zlo, zhi, xy, xz, yz)
 
     t2el = _parse_atom_type_labels(lines)
@@ -157,19 +148,24 @@ def data_to_cif(in_path: Path, out_path: Path|None=None) -> Path:
     shifted = [[x - xlo, y - ylo, z - zlo] for (x, y, z) in coords]
     species = [t2el[int(t)] for t in types]
     struct = Structure(lattice, species, shifted, coords_are_cartesian=True)
-
-    if out_path is None:
+    
+    if out_dir is not None:
+        out_path = Path(out_dir) / (in_path.stem + ".cif")
+    elif out_path is None:
         out_path = in_path.with_suffix(".cif")
+
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     CifWriter(struct, symprec=None).write_file(str(out_path))
     return out_path
 
 def main():
     ap = argparse.ArgumentParser(description="Convert LAMMPS 'write_data' file to CIF (pymatgen).")
     ap.add_argument("data", type=Path, help="Input LAMMPS data file")
-    ap.add_argument("-o", "--out", type=Path, help="Output CIF path (default: same basename)")
+    ap.add_argument("-o", "--out", type=Path, help="Explicit output CIF path (optional)")
+    ap.add_argument("--out-dir", type=Path, help="Directory to save CIF (basename preserved)")
     args = ap.parse_args()
 
-    out = data_to_cif(args.data, args.out)
+    out = data_to_cif(args.data, args.out, args.out_dir)
     print(f"Wrote: {out}")
 
 if __name__ == "__main__":
