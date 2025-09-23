@@ -5,3 +5,5 @@ rdkit==2023.9.3
 scikit-learn==1.7.1
 scikit-optimize==0.9.0
 xgboost==1.7.6
+ovito==3.13.0
+chemparse==0.3.2
