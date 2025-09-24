@@ -7,7 +7,7 @@
 ## Files
 | File               | Links   |
 | --------           | ------- |
-| Full Dataset       | [xlsx](https://github.com/user-attachments/files/22421181/final_cif_data.xlsx)|
+| Full Dataset       | [xlsx](https://github.com/user-attachments/files/22487269/all_cif_data.xlsx)|
 | All CIF files      | [zenodo](https://zenodo.org/records/17157647)|
 
 
