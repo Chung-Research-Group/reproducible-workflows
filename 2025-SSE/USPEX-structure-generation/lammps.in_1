@@ -1,0 +1,69 @@
+##########################################################
+# Simple cell relaxation CUBIC CELL
+##########################################################
+
+units           metal
+newton          on
+dimension       3
+boundary        p p p   # periodic boundary conditions (f ? aperiodic/ p - periodic)
+atom_style 	atomic      # Define what style of atoms to use in a simulation. http://lammps.sandia.gov/doc/atom_style.html
+
+
+read_data coo                        # from where coordinates are read                                     
+                                       
+pair_style chgnet /home/hse/program/lammps/potentials/CHGNET                 # Potential type http://lammps.sandia.gov/doc/pair_style.html    
+pair_coeff * * 0.3.0 Li Si S
+mass 1 6.941
+mass 2 28.085
+mass 3 32.07
+
+neigh_modify 	every 1 delay 0 check yes   # When the neighbours list will be updated http://lammps.sandia.gov/doc/neigh_modify.html
+
+compute 	_rg all gyration                # All atoms will be involved in the simulation http://lammps.sandia.gov/doc/compute.html 
+#---------------------------------------
+
+
+min_style 	cg                                    # The algoritm of relaxation             
+min_modify 	line backtrack                        # The parameters of minimzation algoritm 
+#fix 1 all box/relax iso 1000.0 dilate partial      # Cell relaxation  
+fix 1 all npt temp 50 50 1 iso 1000 1000 1     # Cell relaxation, !!!!!!!USPEX use this to                                                                                       
+dump 		1 all xyz 50 out.xyz                      # Record animation every 50 steps  
+
+dump_modify     1 append yes
+
+thermo_style  custom step time cpu pe ke etotal temp press vol density
+thermo        1
+
+#----------- geometry optimization----------------------
+
+minimize        1.0e-16 1.0e-8 15000 30000       # Perform an energy minimization of the system http://lammps.sandia.gov/doc/minimize.html  
+run 1000
+
+write_data final_struc.data
+
+##########################################################
+# Writing Output Enthalpy and Cell Parameters.
+##########################################################
+variable v equal vol
+print "volume"
+print "$v"
+variable e equal etotal
+print "energy"
+print "$e"
+variable a equal cellalpha
+variable b equal cellbeta
+variable o equal cellgamma
+variable g equal cella
+variable h equal cellb
+variable y equal cellc
+print "Lattice parameters"
+variable a1 equal $g
+print "${a1} 0.00  0.00"
+variable b1 equal $h*cos($o*PI/180)
+variable b2 equal $h*sin($o*PI/180)
+print "${b1} ${b2}  0.00"
+variable c1 equal $y*cos($b*PI/180)
+variable c2 equal $y*(cos($a*PI/180)-cos($b*PI/180)*cos($o*PI/180))/sin($o*PI/180)
+variable c3 equal $y*sqrt(1+2*cos($a*PI/180)*cos($b*PI/180)*cos($o*PI/180)-cos($a*PI/180)^2-cos($b*PI/180)^2-cos($o*PI/180)^2)/sin($o*PI/180)
+print "${c1}  ${c2}  ${c3}"
+#---------------------------------------

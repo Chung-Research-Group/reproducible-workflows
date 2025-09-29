@@ -1,0 +1,6 @@
+transformers 4.55.3
+peft 0.16.0
+torch 2.7.1+cu126
+datasets 3.6.0
+unsloth 2025.7.9
+trl 0.19.1
